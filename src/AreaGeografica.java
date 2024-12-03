@@ -1,4 +1,4 @@
-public class AreaGeografica {
+public class AreaGeografica implements Monitoravel{
     private double tamanho;
     private String tipoTerreno;
     private String localizacao;
@@ -33,7 +33,7 @@ public class AreaGeografica {
         this.localizacao = localizacao;
     }
 
-    public void printaAreaGerografica() {
+    public void gerarRelatorio() {
         System.out.println("Tamanho: "+tamanho);
         System.out.println("Tipo de terrreno: "+tipoTerreno);
         System.out.println("Localização: "+localizacao);

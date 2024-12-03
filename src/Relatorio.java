@@ -1,13 +1,11 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Relatorio {
+public class Relatorio implements Monitoravel{
     private Date dataRelatorio;
-    private AreaGeografica areaGeografica;
     private ArrayList<FenomenoClimatico> fenomenosClimaticos;
     
-    public Relatorio(AreaGeografica areaGeografica) {
-        this.areaGeografica = areaGeografica;
+    public Relatorio() {
         this.fenomenosClimaticos = new ArrayList<>();
     }
 
@@ -27,27 +25,35 @@ public class Relatorio {
         this.fenomenosClimaticos = fenomenosClimaticos;
     }
 
-    public AreaGeografica getAreaGeografica() {
-        return areaGeografica;
-    }
-
-    public void setAreaGeografica(AreaGeografica areaGeografica) {
-        this.areaGeografica = areaGeografica;
-    }
-
     public void addFenomenoClimatico(FenomenoClimatico fenomenoClimatico) {
-        this.fenomenosClimaticos.add(fenomenoClimatico);
+        if (!fenomenosClimaticos.contains(fenomenoClimatico)) {
+            this.fenomenosClimaticos.add(fenomenoClimatico);
+        }
+        System.out.println("O fenômeno já foi adicionado");
     }
     
+    public void removeFenomenoClimatico(FenomenoClimatico fenomenoClimatico){
+        if(fenomenosClimaticos.contains(fenomenoClimatico)){
+            this.fenomenosClimaticos.remove(fenomenoClimatico);
+        }else{
+            System.out.println("O fenomeno não está no relatório");
+        }
+    }
+
     public void gerarRelatorio() {
         dataRelatorio = new Date();
 
         System.out.println("--------------- R E L A T Ó R I O ---------------");
         System.out.println("Fenômenos climaticos: ");
-        for(int i = 0; i < fenomenosClimaticos.size(); i++) {
-            System.out.println("- "+fenomenosClimaticos.get(i).getNome());
+        System.out.println("-------------------------------------------------");
+        for(FenomenoClimatico fenomeno : fenomenosClimaticos) {
+            System.out.println("- Fenômeno: "+fenomeno.getNome());
+            System.out.println("- Areas afetadas: ");
+            for(AreaGeografica area : fenomeno.getAreasAfetadas()){
+                System.out.println("-> " + area.getLocalizacao());
+            }
+            System.out.println("-------------------------------------------------");
         }
-        System.out.println("Localização: "+areaGeografica.getLocalizacao());
         System.out.println("Data: "+dataRelatorio);
     }
 }
